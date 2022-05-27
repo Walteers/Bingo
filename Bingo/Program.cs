@@ -8,12 +8,16 @@ int cartonesAGenerar = int.Parse(Console.ReadLine());
 // Bucle para sacar por consola la cantidad de cartones necesarios los cartones
 for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
 {
+    // Variables booleanas para poder entrar o salir del bucle si se cumplió con los requisitos del cartón
     bool boolFil = true;
     bool boolCol = true;
+    // Contador para ver en cuantas vueltas se creó un carton válido
+    int cont = 0;
 
     // Iniciamos bucle para el carton, si cumple con los requisitos, sale de este.
     while (boolFil || boolCol)
     {
+        cont++;
         // Generamos 27 números para el carton base.
         // Inicializamos las variables 'a' y 'b' para poder terner un rango en los paramtros del objeto 'numeroRandom'. A medida que pasamos a otra columna en el carton, subimos de 10 en 10 los valores a buscar aleatoriamente.
         int a = -9;
@@ -24,8 +28,10 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
             b += 10;
             for (int fil = 0; fil < 3; fil++)
             {
-                // Cuando estamos llenando la ultima columna, a la variable 'b' la igualamos a 90, para tener este ultimo número disponible en la generación de números aleatorios.
-                if (b == 89) b = 90;
+                // A partir del numero 10 de la variable 'a', esta se comienza a inicializar de decena en decena
+                if (a == 11) a = 10;
+                // Cuando estamos llenando la ultima columna, a la variable 'b' la igualamos a 91, para tener este ultimo número disponible(90) en la generación de números aleatorios.
+                if (b == 90) b = 91;
                 aux = numeroRandom.Next(a, b);
                 // Bucle para verificar números repetidos
                 for (int i = 0; i < 3; i++)
@@ -104,7 +110,7 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
         }
     }
 
-    // Parseamos la matriz de int a string para poder mostrarla mas amigablemente por consola
+    // Parseamos la matriz de int a string. Pasamos los números de '1' al '9' como '01' al '09', y los '00' con un unicode(pikas)
     string[,] cartonString = new string[3, 9];
 
     for (int fil = 0; fil < cartonBase.GetUpperBound(0) + 1; fil++)
@@ -117,8 +123,13 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
         }
     }
 
+    // Mejoramos la salida con separadores '-', '=' y espacios en blanco.
     Console.WriteLine("===============================================");
-    Console.WriteLine($"|| Carton {inicio + 1}                                  ||");
+    int cartonNumero = inicio + 1;
+    Console.Write($"|| Carton {cartonNumero}");
+    for (int i = cartonNumero.ToString().Length; i < 35; i++) Console.Write(" ");    
+    Console.WriteLine("||");
+
     Console.WriteLine("-----------------------------------------------");
     for (int fil = 0; fil < 3; fil++)
     {
@@ -130,5 +141,7 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
         Console.WriteLine("");
     }
     Console.WriteLine("===============================================");
+    // Contador para mostrar cuantas iteraciones se realizaron para conseguir el cartón
+    Console.WriteLine($"Número de intentos para crear el cartón: {cont}");
     Console.WriteLine();
 }
