@@ -320,7 +320,7 @@ for ( indiceVectDeMatrices = 0; indiceVectDeMatrices < matrices.Length-sobrantes
     {
         Console.Write($" Intentos para crear el cartón: {contVector[indiceVectDeMatrices + j]}");
         // Imprimimos los espacios necesarios después de 'Intentos para crear el cartón:'
-        for (int k = contVector[indiceVectDeMatrices+j].ToString().Length; k < 20; k++)  Console.Write(" ");
+        for (int k = contVector[indiceVectDeMatrices+j].ToString().Length; k < 21; k++)  Console.Write(" ");
     }
     Console.WriteLine();
     Console.WriteLine();
@@ -384,7 +384,7 @@ if (sobrantes == 2)
     Console.WriteLine();
     Console.WriteLine();
 }
-else
+if(sobrantes == 1)
 {
     Console.Write("================================================     ");
     Console.WriteLine();
