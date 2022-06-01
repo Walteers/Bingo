@@ -1,5 +1,5 @@
 ﻿int[,] carton = new int[3, 9];  // Matriz en donde se guardan los números del cartón
-int aux, auxFil, auxCol;
+int aux, auxFil, auxCol, contRepetido = 0;
 string auxString;
 Random numeroRandom = new Random();
 
@@ -7,17 +7,17 @@ Console.Write("Cuantos cartones quiere generar? ");
 int cartonesAGenerar = int.Parse(Console.ReadLine());
 
 // Vector para guardar el contador para ver en cuantas vueltas se creó un carton válido
-int[] contVector = new int[cartonesAGenerar]; 
+int[] contVector = new int[cartonesAGenerar];
 // Vector para ir guardando matrices o cartones sin repetir. Para que cada carton sea unico
 int[][,] matrices = new int[cartonesAGenerar][,];
-// Inicializamos el vector de matrices con matrices de 3x9
+//Inicializamos el vector de matrices con matrices de 3x9
 for (int i = 0; i < cartonesAGenerar; i++) matrices[i] = new int[3, 9];
 
-if (cartonesAGenerar > 1000 & cartonesAGenerar <= 2000) Console.WriteLine("Espere un momento...");
-if (cartonesAGenerar > 2000 & cartonesAGenerar <= 5000) Console.WriteLine("Espere un bueeen momento...");
-if (cartonesAGenerar > 5000 & cartonesAGenerar <= 25000) Console.WriteLine("Esto va a llevar un buen rato en hacerse, tenga paciencia...");
-if (cartonesAGenerar > 25000 & cartonesAGenerar <= 50000) Console.WriteLine("Valla a tomarse un café, esto tiene para rato...");
-if (cartonesAGenerar > 50000) Console.WriteLine("Valla a tomarse una pava de mate, esto tiene para rato...");
+if (cartonesAGenerar > 5000 & cartonesAGenerar <= 7500) Console.WriteLine("Espere un momento...");
+if (cartonesAGenerar > 7500 & cartonesAGenerar <= 20000) Console.WriteLine("Espere un bueeen momento...");
+if (cartonesAGenerar > 20000 & cartonesAGenerar <= 40000) Console.WriteLine("Esto va a llevar un buen rato en hacerse, tenga paciencia...");
+if (cartonesAGenerar > 40000 & cartonesAGenerar <= 80000) Console.WriteLine("Valla a tomarse un café, esto tiene para rato...");
+if (cartonesAGenerar > 80000) Console.WriteLine("Valla a preparar la pava para los mates, esto tiene para rato...");
 
 // Bucle para generar los cartones pedidos por el usuario
 for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
@@ -125,10 +125,10 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
                 }
             }
         }
-        
-           
+
+
         // Si las columnas y las filas cumplen con los requisitos, entra al siguiente condicional, para ver si el carton ya esta repetido
-        if( boolColFil == false )
+        if (boolColFil == false)
         {
             // Ya tenemos generado un cartón valido, ahora vamos a comprobar que no este repetido con otro carton. Cada carton va a ser unico. 
             // Vamos a pasar los numeros válidos del cartón obtenido a un vector auxiliar 1, sin los ceros. Despues hacemos lo mismo con el vector de matrices donde se van a ir guardando los cartones, tomamos cada carton(matriz) de este vector, lo pasamos a un vector auxiliar 2 sin los ceros, para poder comparar unicamente los numeros del carton del bingo. Si el carton que se genera se encuentra en la matriz de vectores, se cancela y se pasa a crear otro cartón.
@@ -159,7 +159,7 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
                 comparadorDeVectores = false;
 
                 // Ingresamos al vector auxiliar 2 (Este bucle for para la variable 'j' puede que esté demas)
-                for (int j = 0; j < 15; j++) 
+                for (int j = 0; j < 15; j++)
                 {
                     for (int col = 0; col < 9; col++)
                     {
@@ -184,7 +184,12 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
                     }
                 }
 
-                if (comparadorDeVectores == false) break;// Si comparadorDeVectores es false, significa que el carton generado es igual a un carton que está guardado en el vector de matrices. Se sale del bucle y se comienza a generar un carton nuevo
+                // Si comparadorDeVectores es false, significa que el carton generado es igual a un carton que está guardado en el vector de matrices. Se sale del bucle y se comienza a generar un carton nuevo
+                if (comparadorDeVectores == false)
+                {
+                    contRepetido++;
+                    break;
+                }
             }
 
             // Si la validacion es correcta se guarda el carton en el vector de matrices
@@ -202,7 +207,7 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
             else boolColFil = true; // inicializamos a boolCool a true para que el bucle while vuelva a generar un carton nuevo.
 
             // Bloque de código para finalizar el programa si el usuario acepta cuando se alcanze una cierta cantidad de iteraciones y no se encuentre un cartón válido y sin repetirse
-            if ( (boolColFil == true) & (cont == 500 | cont == 1500 | cont == 3000 | cont == 6000 | cont == 12000))
+            if ((boolColFil == true) & (cont == 500 | cont == 1500 | cont == 3000 | cont == 6000 | cont == 12000))
             {
                 Console.Write($"Se llegó a las {cont} iteraciones para encontrar un nuevo cartón. Y se han generado {inicio} cartones hasta el mometo. Quiere continuar?(s/n) ");
                 auxString = Console.ReadLine();
@@ -223,7 +228,7 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
             }
 
             // Si se alcanzan las 50000 iteraciones el programa se termina
-            if ( boolColFil == true & cont == 50000 )
+            if (boolColFil == true & cont == 50000)
             {
                 Console.WriteLine($"Programa terminado. Se llegó a las {cont} iteraciones para tratar de encontrar un cartón válido. Y se han generado {inicio} cartones hasta el mometo");
                 Console.WriteLine("Presione cualquier tecla y se imprimirán los cartones por consola");
@@ -231,151 +236,88 @@ for (int inicio = 0; inicio < cartonesAGenerar; inicio++)
                 inicio = cartonesAGenerar;
                 break;
             }
-        }       
+        }
     }
 }
 //==============================================================================================================================
-//Impresion por consola
+//¡Impresion por consola
 
 //Bolque de código para poder imprimir todos cartones del vector 'matrices' con el indice que sean hasta multiplo de 3, ya que imprimimos de a 3 cartones, si no, los ultimos cartones dan un error de ejecución. El valor de 'contFactorTres' es el limite para impromir la pripera y principal tanda de cartones. 'sobrantes' se usa para otro bucle de impresión por consola, que son los cartones qu faltarían imprimir.
-int contFactorTres = 0;
+
+Console.WriteLine();
+Console.WriteLine($"Se han generado los {cartonesAGenerar} cartones.");
+Console.Write("Cuantas columnas de cartones quiere imprimir? Tenga en cuenta que si supera el ancho de la ventana el resultado podría ser monstruso. 1, 2, 3 o 4? ");
+int  columnasAImprimir = int.Parse(Console.ReadLine());
+while (columnasAImprimir < 0 | columnasAImprimir > 4)
+{
+    Console.WriteLine("¡Ha ingresado una opción inválida!");
+    Console.Write("Cuantas columnas de cartones quiere imprimir? Tenga en cuenta que si supera el ancho de la ventana el resultado podría ser monstruso. 1, 2, 3 o 4?  "); 
+    columnasAImprimir = int.Parse(Console.ReadLine());
+}
+Console.WriteLine();
+Console.WriteLine();
+
+int contFactor = 0;
 int sobrantes = 0;
-int buclesI;
+int inicioFactor;
 
-for ( buclesI = 3; buclesI < cartonesAGenerar; buclesI += 3) contFactorTres++;
+for (inicioFactor = columnasAImprimir; inicioFactor < cartonesAGenerar; inicioFactor += columnasAImprimir) contFactor++;
 
-if (buclesI > cartonesAGenerar) sobrantes = cartonesAGenerar - (contFactorTres * 3);
+if (inicioFactor > cartonesAGenerar) sobrantes = cartonesAGenerar - (contFactor * columnasAImprimir);
 
 
 int indiceVectDeMatrices;
-for ( indiceVectDeMatrices = 0; indiceVectDeMatrices < matrices.Length-sobrantes; indiceVectDeMatrices += 3) // Ingreso al vector de matrices
+int cartonNumero;
+for (indiceVectDeMatrices = 0; indiceVectDeMatrices < matrices.Length - sobrantes; indiceVectDeMatrices += columnasAImprimir) // Ingreso al vector de matrices
 {
     // Imprimimos la cabezera. Mejoramos la salida con separadores '-', '=' y espacios en blanco para la cabezera de cada cartón
 
     // Primera barra superior
-    for (int i = 0; i < 3; i++) Console.Write("================================================     ");
+    for (int i = 0; i < columnasAImprimir; i++) Console.Write("================================================    ");
     Console.WriteLine();
 
     // Cartón número
-    int cartonNumero = indiceVectDeMatrices + 1;
-    for (int i = 0; i < 3; i++)
+    cartonNumero = indiceVectDeMatrices + 1;
+    for (int i = 0; i < columnasAImprimir; i++)
     {
         Console.Write($"|| Cartón  {cartonNumero}");
         //int j; // Variable creada por el desfajase de la doble barra al comienzo de la fila 'Cartón <número>'
         //if (col1 > 0)  j = cartonNumero.ToString().Length - 2;
         //else  j = cartonNumero.ToString().Length;
         for (int k = cartonNumero.ToString().Length; k < 35; k++) Console.Write(" "); // Espacios para despues de 'Cartón número'.
-        Console.Write("||     "); // Útltima barra derecha para cerrar el cartón al final                                    
+        Console.Write("||    "); // Útltima barra derecha para cerrar el cartón al final                                    
         cartonNumero++;
     }
     Console.WriteLine();
 
     // Separador de cabezera y bloque dodne están los números del bingo
-    for (int i = 0; i < 3; i++) Console.Write("------------------------------------------------     ");
+    for (int i = 0; i < columnasAImprimir; i++) Console.Write("------------------------------------------------    ");
     Console.WriteLine();
 
 
     for (int fil1 = 0; fil1 < 3; fil1++)
     {
-        // Imprimimos la fila del primer cartón
-        for (int col1 = 0; col1 < 9; col1++)
+        for (int i = 0; i < columnasAImprimir; i++) // Tres cartones por linea
         {
-            auxString = matrices[indiceVectDeMatrices][fil1, col1].ToString();
-            if (col1 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col1 == 8) Console.Write("|     ");
-        }
+            // Imprimimos la fila del cartón
+            for (int col1 = 0; col1 < 9; col1++)
+            {
+                auxString = matrices[indiceVectDeMatrices + i][fil1, col1].ToString();
+                if (col1 == 0) Console.Write("||");
+                if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
+                if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
+                if (auxString.Length == 2) Console.Write($" {auxString} |");
+                if (col1 == 8) Console.Write("|    ");
 
-        // Imprimimos la fila del segundo cartón
-        for (int col2 = 0; col2 < 9; col2++)
-        {
-            auxString = matrices[indiceVectDeMatrices + 1][fil1, col2].ToString();
-            if (col2 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col2 == 8) Console.Write("|     ");
-        }
-
-        // Imprimimos la fila del tercer cartón
-        for (int col2 = 0; col2 < 9; col2++)
-        {
-            auxString = matrices[indiceVectDeMatrices + 2][fil1, col2].ToString();
-            if (col2 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col2 == 8) Console.Write("|     ");
-        }
-        Console.WriteLine();
-    }
-
-
-    // Pie de cartón
-    for (int i = 0; i < 3; i++) Console.Write("================================================     ");
-    Console.WriteLine();
-    for (int j = 0; j < 3; j++)
-    {
-        Console.Write($" Intentos para crear el cartón: {contVector[indiceVectDeMatrices + j]}");
-        // Imprimimos los espacios necesarios después de 'Intentos para crear el cartón:'
-        for (int k = contVector[indiceVectDeMatrices+j].ToString().Length; k < 21; k++)  Console.Write(" ");
-    }
-    Console.WriteLine();
-    Console.WriteLine();
-}
-
-
-//Bucle para imprimir los cartones que faltan. La declaración e inicializacion de 'i' se debe a que la variable 'indiceVectDeMatrices' se paso de largo en resultado del paso del bucle anterior, esto genera un error de ejecición si no se tiene en cuenta. Hay que recuperar los cartones que no se han imprimido. En 'int i = (indiceVectDeMatrices-3)-1' a 'indiceVectDeMatrices' se le restan tres para haher un paso menos con respecto al bucle anterior, y se le suma 1 para poder acceder al siguiente indice del vector 'matrices'. Este bucle termina al llegar al fianl del vector 'matrices'.
-if (sobrantes == 2)
-{
-    for (int i = 0; i < 2; i++) Console.Write("================================================     ");
-    Console.WriteLine();
-
-    int cartonNumero = indiceVectDeMatrices + 1;
-    for (int i = 0; i < 2; i++)
-    {
-        Console.Write($"|| Cartón  {cartonNumero}");
-        for (int k = cartonNumero.ToString().Length; k < 35; k++) Console.Write(" ");
-        Console.Write("||     ");
-        cartonNumero++;
-    }
-    Console.WriteLine();
-
-    for (int i = 0; i < 2; i++) Console.Write("------------------------------------------------     ");
-    Console.WriteLine();
-
-    for (int fil1 = 0; fil1 < 3; fil1++)
-    {
-        // Imprimimos la fila de un cartóm
-        for (int col1 = 0; col1 < 9; col1++)
-        {
-            auxString = matrices[indiceVectDeMatrices][fil1, col1].ToString();
-            if (col1 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col1 == 8) Console.Write("|     ");
-        }
-
-        // Imprimimos la fila del otro cartóm
-        for (int col2 = 0; col2 < 9; col2++)
-        {
-            auxString = matrices[indiceVectDeMatrices + 1][fil1, col2].ToString();
-            if (col2 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col2 == 8) Console.Write("|     ");
+            }
         }
         Console.WriteLine();
     }
 
     // Pie de cartón
-    for (int i = 0; i < 2; i++) Console.Write("================================================     ");
+    for (int i = 0; i < columnasAImprimir; i++) Console.Write("================================================    ");
     Console.WriteLine();
-    for (int j = 0; j < 2; j++)
+    for (int j = 0; j < columnasAImprimir; j++)
     {
         Console.Write($" Intentos para crear el cartón: {contVector[indiceVectDeMatrices + j]}");
         // Imprimimos los espacios necesarios después de 'Intentos para crear el cartón:'
@@ -384,56 +326,69 @@ if (sobrantes == 2)
     Console.WriteLine();
     Console.WriteLine();
 }
-if(sobrantes == 1)
+
+
+//Bucle para imprimir los cartones que faltan. La declaración e inicializacion de 'i' se debe a que la variable 'indiceVectDeMatrices' se paso de largo en resultado del paso del bucle anterior, esto genera un error de ejecición si no se tiene en cuenta. Hay que recuperar los cartones que no se han imprimido. En 'int i = (indiceVectDeMatrices-3)-1' a 'indiceVectDeMatrices' se le restan tres para haher un paso menos con respecto al bucle anterior, y se le suma 1 para poder acceder al siguiente indice del vector 'matrices'. Este bucle termina al llegar al fianl del vector 'matrices'.
+
+if(sobrantes > 0)
 {
-    Console.Write("================================================     ");
+    for (int i = 0; i < sobrantes; i++) Console.Write("================================================    ");
     Console.WriteLine();
 
-    int cartonNumero = indiceVectDeMatrices + 1;
-    Console.Write($"|| Cartón  {cartonNumero}");
-    for (int k = cartonNumero.ToString().Length; k < 35; k++) Console.Write(" ");
-    Console.Write("||     ");
+    cartonNumero = indiceVectDeMatrices + 1;
+    for (int i = 0; i < sobrantes; i++)
+    {
+        Console.Write($"|| Cartón  {cartonNumero}");
+        for (int k = cartonNumero.ToString().Length; k < 35; k++) Console.Write(" ");
+        Console.Write("||    ");
+        cartonNumero++;
+    }
     Console.WriteLine();
 
-    Console.Write("------------------------------------------------     ");
+    for (int i = 0; i < sobrantes; i++) Console.Write("------------------------------------------------    ");
     Console.WriteLine();
-
 
     for (int fil1 = 0; fil1 < 3; fil1++)
     {
-        // Imprimimos la fila del unico cartóm
-        for (int col1 = 0; col1 < 9; col1++)
+        for (int i = 0; i < sobrantes; i++)
         {
-            auxString = matrices[indiceVectDeMatrices][fil1, col1].ToString();
-            if (col1 == 0) Console.Write("||");
-            if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
-            if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
-            if (auxString.Length == 2) Console.Write($" {auxString} |");
-            if (col1 == 8) Console.Write("|     ");
-        }       
+            // Imprimimos la fila del cartón
+            for (int col1 = 0; col1 < 9; col1++)
+            {
+                auxString = matrices[indiceVectDeMatrices + i][fil1, col1].ToString();
+                if (col1 == 0) Console.Write("||");
+                if (auxString == "0") Console.Write($" {Convert.ToChar(6)}{Convert.ToChar(6)} |");
+                if (auxString.Length == 1 & auxString != "0") Console.Write($" 0{auxString} |");
+                if (auxString.Length == 2) Console.Write($" {auxString} |");
+                if (col1 == 8) Console.Write("|    ");
+
+            }
+        }
         Console.WriteLine();
     }
 
     // Pie de cartón
-    Console.Write("================================================     ");
+    for (int i = 0; i < sobrantes; i++) Console.Write("================================================    ");
     Console.WriteLine();
-
-    Console.Write($" Intentos para crear el cartón: {contVector[indiceVectDeMatrices]}");
-    // Imprimimos los espacios necesarios después de 'Intentos para crear el cartón:'
-    for (int k = contVector[indiceVectDeMatrices].ToString().Length; k < 20; k++) Console.Write(" ");
-
+    for (int j = 0; j < sobrantes; j++)
+    {
+        Console.Write($" Intentos para crear el cartón: {contVector[indiceVectDeMatrices + j]}");
+        // Imprimimos los espacios necesarios después de 'Intentos para crear el cartón:'
+        for (int k = contVector[indiceVectDeMatrices + j].ToString().Length; k < 20; k++) Console.Write(" ");
+    }
     Console.WriteLine();
     Console.WriteLine();
 }
 
-
-// Imprimimos la cantidad total de iteraciones entre todos los cartones que no se pudieron validar
+// Imprimimos información adicional
 aux = 0;
 for (int i = 0; i < contVector.Length; i++)
 {
     aux += contVector[i];
 }
 Console.WriteLine($"Total de iteraciones en todos los cartones: {aux}");
+Console.WriteLine($"Promedio de iterciones: {aux/cartonesAGenerar}");
+Console.WriteLine($"Cartones generados e invalidados por estar repetido: {contRepetido}");
 
 Console.Write("Presione una tecla para salir");
 Console.ReadKey();
