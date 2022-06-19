@@ -20,25 +20,25 @@ namespace Bingo
                 switch (option)
                 {
                     case 1:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo00.txt";
+                        path = @"..\..\..\img\Bingo00.txt";
                         break;
                     case 2:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo01.txt";
+                        path = @"..\..\..\img\Bingo01.txt";
                         break;
                     case 3:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo02.txt";
+                        path = @"..\..\..\img\Bingo02.txt";
                         break;
                     case 4:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo03.txt";
+                        path = @"..\..\..\img\Bingo03.txt";
                         break;
                     case 5:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo04.txt";
+                        path = @"..\..\..\img\Bingo04.txt";
                         break;
                     case 6:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo06.txt";
+                        path = @"..\..\..\img\Bingo06.txt";
                         break;
                     case 7:
-                        path = @"C:\Users\Walter\Desktop\Programacion\Codigos\MinaClavero\Bingo\Bingo\img\Bingo06.txt";
+                        path = @"..\..\..\img\Bingo06.txt";
                         break;
                     default:
                         path = null;
